@@ -4,11 +4,12 @@
 
 Biblioteca para manipulação das entradas analógicas da Industrialli Hub, com o uso da biblioteca Hardware Abstraction Layer (HAL). Está biblioteca foi configurada para realizar a leitura dos valores brutos das entradas analógicas via Direct memory access (DMA), esses valores podem ser lidos na variavél global analog_input_values[4].
 
+> [!IMPORTANT]  
+> Consulte a biblioteca geral da Industrialli Hub.
+
 ## Exemplo
 No exemplo abaixo, é inicializado a biblioteca de entradas analógicas, e logo em seguida é configurado a entrada A01 para realizar leitura de 0 - 10V e a entrada A02 para realizar a leitura de 0 - 20V. No loop principal é realizado a leitura dos valores dessa variável.
 
-
-### Servidor
 ```cpp
 #include "industrialli_hub.hpp"
 
