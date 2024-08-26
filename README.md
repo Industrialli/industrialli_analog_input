@@ -5,7 +5,9 @@
 Biblioteca para manipulação das entradas analógicas da Industrialli Hub para o framework Arduino com o uso da biblioteca [stm32ino](https://github.com/stm32duino/).
 
 > [!IMPORTANT]  
-> Consulte a biblioteca geral da Industrialli Hub [🔗](https://github.com/Industrialli/Industrialli-Hub).
+> Consulte a biblioteca principal da Industrialli Hub [🔗](https://github.com/Industrialli/Industrialli-Hub).
+> 
+> Consulte a versão em HAL desta biblioteca [🔗](https://github.com/Industrialli/industrialli_analog_input/tree/HAL).
 
 ## Exemplo
 No exemplo abaixo, é inicializado a biblioteca de entradas analógicas, e logo em seguida é configurado a resolução em 12 bits e a entrada A01 para realizar leitura de 0 - 10V e a entrada A02 para realizar a leitura de 0 - 20mA. No loop principal é realizado a leitura dos valores dessa variável.
