@@ -1,11 +1,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+
+
 # industrialli analog input
 
-Biblioteca para manipulação das entradas analógicas da Industrialli Hub, com o uso da biblioteca Hardware Abstraction Layer (HAL). Está biblioteca foi configurada para realizar a leitura dos valores brutos das entradas analógicas via Direct memory access (DMA), esses valores podem ser lidos na variavél global analog_input_values[4].
+Biblioteca para manipulação das entradas analógicas da Industrialli Hub para o framework Arduino com o uso da biblioteca [stm32ino](https://github.com/stm32duino/).
 
 > [!IMPORTANT]  
-> Consulte a biblioteca geral da Industrialli Hub.
+> Consulte a biblioteca geral da Industrialli Hub [🔗](https://github.com/Industrialli/Industrialli-Hub).
 
 ## Exemplo
 No exemplo abaixo, é inicializado a biblioteca de entradas analógicas, e logo em seguida é configurado a entrada A01 para realizar leitura de 0 - 10V e a entrada A02 para realizar a leitura de 0 - 20V. No loop principal é realizado a leitura dos valores dessa variável.
@@ -15,19 +17,19 @@ No exemplo abaixo, é inicializado a biblioteca de entradas analógicas, e logo 
 
 industrialli_hub hub;
 
-int main(){
-    hub.begin();
+void setup(){
+	hub.begin();
 
 	analog_input.begin();
-	analog_input.set_input_voltage(A01, INPUT_VOLTAGE_10V);
-	analog_input.set_input_voltage(A02, INPUT_VOLTAGE_20V);
-	leds.update();
-
-    while(1){
-  		__IO double a01V = analog_input.analog_read(A01);
-  		__IO double a02V = analog_input.analog_read(A02);
-    }
+    	analog_input.set_resolution(12);
+    	analog_input.set_read_mode(A01, READ_20mA);
 }
+
+void loop(){
+	Serial.println(analog_input.analog_read(A01));
+	leds.update();
+	delay(10);
+}   
 ```
 
 ## Funções
@@ -50,9 +52,9 @@ analog_input.begin();
 </details>
 
 <details>
-<summary>set_input_voltage</summary>
+<summary>set_read_mode</summary>
 
-Inicializa uma entrada analógica para uma voltagem específica.
+Inicializa uma entrada analógica para um modo de leitura especifica.
 
 **Parâmetros:**
 - ANALOG_PIN: Enum da entrada analógica: A01, A02, A03 e A04.
