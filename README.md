@@ -10,7 +10,7 @@ Biblioteca para manipulação das entradas analógicas da Industrialli Hub para 
 > Consulte a versão em HAL desta biblioteca [🔗](https://github.com/Industrialli/industrialli_analog_input/tree/HAL).
 
 ## Exemplo
-No exemplo abaixo, é inicializado a biblioteca de entradas analógicas, e logo em seguida é configurado a resolução em 12 bits e a entrada A01 para realizar leitura de 0 - 10V e a entrada A02 para realizar a leitura de 0 - 20mA. No loop principal é realizado a leitura dos valores dessa variável.
+No exemplo abaixo, é inicializado a biblioteca de entradas analógicas, configurado a resolução de leitura em 12 bits, configurado a entrada A01 para realizar leitura de 0 - 10V e a entrada A02 para realizar a leitura de 0 - 20mA. No loop principal é realizado a leitura dos valores dessa variável e exibido no console.
 
 ```cpp
 #include "industrialli_hub.hpp"
@@ -105,3 +105,75 @@ Serial.println(analog_input.analog_read(A02));
 ```
 </details>
   
+<details>
+<summary>map</summary>
+
+Realiza o mapeamento de um valor que está em um intervalo para outro intervalo. Essá função pode ser util para converter o valor da entrada analógica para alguma outra informação, por exemplo de mA para temperatura ou pressão.
+
+**Parâmetros:**
+- double: valor de entrada.
+- double: valor minimo do intervalo de entrada.
+- double: valor máximo do intervalo de entrada.
+- double: valor minimo do intervalo de saída.
+- double: valor máximo do intervalo de saída.
+
+**Retorno:** 
+- double: Valor mapeado para o intervalo de saída.
+
+**Exemplo**
+
+No exemplo abaixo, é convertido o valor recebido por um sensor de temperatura que emite uma corrente entre 4 - 20mA para a temperatura entre 0 - 200°C. 
+
+```cpp
+double mA = analog_input.analog_read(A01);
+double temperatura = map(mA, 4, 20, 0, 200);
+```
+</details>
+
+<details>
+<summary>map_pin</summary>
+
+Realiza o mapeamento de um valor de uma entrada analógica que está em um intervalo para outro intervalo. Essá função pode ser util para converter o valor da entrada analógica para alguma outra informação, por exemplo de mA para temperatura ou pressão.
+
+**Parâmetros:**
+- uint8_t: porta da entrada analógica: A01, A02, A03 e A04.
+- double: valor minimo do intervalo de entrada.
+- double: valor máximo do intervalo de entrada.
+- double: valor minimo do intervalo de saída.
+- double: valor máximo do intervalo de saída.
+
+**Retorno:** 
+- double: Valor de uma entrada analógica mapeada para o intervalo de saída.
+
+**Exemplo**
+
+No exemplo abaixo, é convertido o valor recebido por um sensor de temperatura na entrada A01 que emite uma corrente entre 4 - 20mA para a temperatura entre 0 - 200°C. 
+
+```cpp
+double temperatura = map_pin(A01, 4, 20, 0, 200);
+```
+</details>
+
+<details>
+<summary>alarm_020mA</summary>
+
+Verifica se o valor de uma entrada analógica configurada no modo de leitura READ_20mA está operando corretamente. Alguns sensores são configurados para operar a partir de uma corrente, isso possibilita a detecção de problemas no sensor caso opere abaixo desse valor.
+
+**Parâmetros:**
+- double: valor lido por uma entrada analógica configurada no modo de leitura READ_20mA.
+- double: threshold.
+
+**Retorno:** 
+- bool: verdadeiro caso o valor da entrada analógica seja menor que o threshold definido.
+
+**Exemplo**
+```cpp
+double mA = analog_input.analog_read(A01);
+
+if(alarm_020mA(mA, 4)){
+	error = true;
+}else {
+	double temperatura = map(mA, 4, 20, 0, 200);
+}
+```
+</details>
